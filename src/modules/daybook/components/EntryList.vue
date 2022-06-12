@@ -1,9 +1,21 @@
 <script>
 import { defineAsyncComponent } from 'vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
     EntryItem: defineAsyncComponent(() => import('@/modules/daybook/components/EntryItem'))
+  },
+  data () {
+    return {
+      term: ''
+    }
+  },
+  computed: {
+    ...mapGetters('journal', ['getEntriesByTerm']),
+    entriesByTerm () {
+      return this.getEntriesByTerm(this.term)
+    }
   }
 }
 </script>
@@ -11,10 +23,10 @@ export default {
 <template>
   <div class="entry-list-container">
     <div class="px-2 pt-2">
-      <input type="search" placeholder="Search..." class="form-control">
+      <input v-model="term" type="search" placeholder="Search..." class="form-control">
     </div>
     <div class="entry-scrollarea">
-      <EntryItem v-for="item in 100" :key="item" />
+      <EntryItem v-for="entry in entriesByTerm" :key="entry.id" :entry="entry" />
     </div>
   </div>
 </template>
