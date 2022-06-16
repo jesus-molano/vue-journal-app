@@ -10,7 +10,9 @@ export default {
 </script>
 
 <template>
-  <button class="btn btn-primary d-flex align-items-center justify-content-center">
+  <button
+    @click="$emit('on:click')"
+    class="btn btn-primary d-flex align-items-center justify-content-center">
     <i class="fa fa-2x" :class="icon"></i>
   </button>
 </template>
